@@ -15,4 +15,12 @@ function parseDuration(hours, minutes, seconds) {
   return (h * 3600 + m * 60 + s) * 1000;
 }
 
-console.log(parseDuration(1,1,1));
+function start(duration) {
+  if (timer.isRunning) return;
+
+  timer.duration = duration;
+  timer.startTime = Date.now();
+  timer.isRunning = true;
+}
+
+
