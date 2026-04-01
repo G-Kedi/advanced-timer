@@ -1,4 +1,5 @@
 "use strict";
+let displayIntervalId = null;
 
 const timer = {
   duration: 0,
@@ -53,3 +54,30 @@ function reset() {
   timer.remaining = 0;
   timer.isRunning = false;
 }
+
+function formatTime(ms) {
+  const totalSeconds = Math.ceil(ms / 1000);
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+}
+
+displayIntervalId = setInterval(() => {
+  const remaining = getRemaining();
+  console.log(formatTime(remaining));
+
+  if (remaining <= 0 && timer.isRunning) {
+    reset();
+    console.log("Timer terminé");
+
+    clearInterval(displayIntervalId); // ← arrête l'intervalle
+    displayIntervalId = null;
+  }
+}, 200);
+
+console.log(displayIntervalId);
+
+
+start(parseDuration(0, 0, 10)); // démarre un timer de 1 minute 30 secondes
