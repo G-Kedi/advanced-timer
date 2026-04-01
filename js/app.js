@@ -1,4 +1,14 @@
 "use strict";
+const hoursInput = document.getElementById("hours");
+const minutesInput = document.getElementById("minutes");
+const secondsInput = document.getElementById("seconds");
+
+const startBtn = document.getElementById("start-btn");
+const pauseBtn = document.getElementById("pause-btn");
+const resumeBtn = document.getElementById("resume-btn");
+const resetBtn = document.getElementById("reset-btn");
+
+const displayEl = document.getElementById("timer-display");
 let displayIntervalId = null;
 
 const timer = {
@@ -64,20 +74,49 @@ function formatTime(ms) {
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
 
-displayIntervalId = setInterval(() => {
-  const remaining = getRemaining();
-  console.log(formatTime(remaining));
+startBtn.addEventListener("click", () => {
+  const duration = parseDuration(
+    hoursInput.value,
+    minutesInput.value,
+    secondsInput.value,
+  );
 
-  if (remaining <= 0 && timer.isRunning) {
-    reset();
-    console.log("Timer terminé");
+  if (duration <= 0) return;
 
-    clearInterval(displayIntervalId); // ← arrête l'intervalle
+  start(duration); // moteur JS
+  runDisplayLoop(); // fonction qui met à jour l'affichage (on va la créer)
+});
+
+function runDisplayLoop() {
+  if (displayIntervalId) return; // empêche double interval
+
+  displayIntervalId = setInterval(() => {
+    const remaining = getRemaining();
+    displayEl.textContent = formatTime(remaining);
+
+    if (remaining <= 0 && timer.isRunning) {
+      reset();
+      displayEl.textContent = "Timer terminé";
+      clearInterval(displayIntervalId);
+      displayIntervalId = null;
+    }
+  }, 200);
+}
+
+pauseBtn.addEventListener("click", () => {
+  pause();
+});
+
+resumeBtn.addEventListener("click", () => {
+  resume();
+  runDisplayLoop();
+});
+
+resetBtn.addEventListener("click", () => {
+  reset();
+  displayEl.textContent = "00:00:00";
+  if (displayIntervalId) {
+    clearInterval(displayIntervalId);
     displayIntervalId = null;
   }
-}, 200);
-
-console.log(displayIntervalId);
-
-
-start(parseDuration(0, 0, 10)); // démarre un timer de 1 minute 30 secondes
+});
