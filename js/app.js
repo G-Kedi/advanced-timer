@@ -32,3 +32,24 @@ function getRemaining() {
   return Math.max(remaining, 0);
 }
 
+function pause() {
+  if (!timer.isRunning) return;
+
+  timer.remaining = getRemaining(); // figer le temps restant
+  timer.isRunning = false;
+}
+
+function resume() {
+  if (timer.isRunning || timer.remaining <= 0) return;
+
+  timer.duration = timer.remaining;
+  timer.startTime = Date.now();
+  timer.isRunning = true;
+}
+
+function reset() {
+  timer.duration = 0;
+  timer.startTime = null;
+  timer.remaining = 0;
+  timer.isRunning = false;
+}
