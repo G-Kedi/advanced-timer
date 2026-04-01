@@ -23,4 +23,12 @@ function start(duration) {
   timer.isRunning = true;
 }
 
+function getRemaining() {
+  if (!timer.isRunning) return timer.remaining;
+
+  const elapsed = Date.now() - timer.startTime;
+  const remaining = timer.duration - elapsed;
+
+  return Math.max(remaining, 0);
+}
 
