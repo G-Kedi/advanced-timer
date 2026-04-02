@@ -62,3 +62,15 @@ body {
 .timer-display {
   font-size: 4rem;
 }
+footer {
+  font-size: .875rem;
+  text-align: center;
+  padding: 20px;
+  background-color: #404040;
+  color: #ffffff7e;
+}
+footer a {
+  color: #ffffff7e;
+  text-decoration: none;
+  
+}
