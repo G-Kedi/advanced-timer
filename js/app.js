@@ -32,7 +32,7 @@ startBtn.addEventListener("click", () => {
 
   if (duration <= 0) return;
 
-  start(duration); // moteur JS
+  timer.start(duration); // moteur JS
   runDisplayLoop(); // fonction qui met à jour l'affichage (on va la créer)
 });
 
@@ -40,11 +40,11 @@ function runDisplayLoop() {
   if (displayIntervalId) return; // empêche double interval
 
   displayIntervalId = setInterval(() => {
-    const remaining = getRemaining();
+    const remaining = timer.getRemaining();
     displayEl.textContent = formatTime(remaining);
 
     if (remaining <= 0 && timer.isRunning()) {
-      reset();
+      timer.reset();
       displayEl.textContent = "Timer terminé";
       clearInterval(displayIntervalId);
       displayIntervalId = null;
@@ -53,16 +53,16 @@ function runDisplayLoop() {
 }
 
 pauseBtn.addEventListener("click", () => {
-  pause();
+  timer.pause();
 });
 
 resumeBtn.addEventListener("click", () => {
-  resume();
+  timer.resume();
   runDisplayLoop();
 });
 
 resetBtn.addEventListener("click", () => {
-  reset();
+  timer.reset();
   displayEl.textContent = "00:00:00";
   if (displayIntervalId) {
     clearInterval(displayIntervalId);
