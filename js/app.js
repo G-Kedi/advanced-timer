@@ -23,6 +23,14 @@ function formatTime(ms) {
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
 
+function parseDuration(hours, minutes, seconds) {
+  const h = Number(hours) || 0;
+  const m = Number(minutes) || 0;
+  const s = Number(seconds) || 0;
+
+  return (h * 3600 + m * 60 + s) * 1000;
+}
+
 startBtn.addEventListener("click", () => {
   const duration = parseDuration(
     hoursInput.value,
