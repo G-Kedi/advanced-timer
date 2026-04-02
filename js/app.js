@@ -72,6 +72,9 @@ resumeBtn.addEventListener("click", () => {
 resetBtn.addEventListener("click", () => {
   timer.reset();
   displayEl.textContent = "00:00:00";
+  hoursInput.value = "";
+  minutesInput.value = "";
+  secondsInput.value = "";
   if (displayIntervalId) {
     clearInterval(displayIntervalId);
     displayIntervalId = null;
