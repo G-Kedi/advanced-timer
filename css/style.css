@@ -21,7 +21,7 @@ body {
 }
 
 .timer-container h1 {
-  font-size: 5rem;
+  font-size: 2.5rem;
   color: #333;
 }
 
@@ -33,24 +33,14 @@ body {
   gap: 1rem;
 }
 
-.timer-container button {
-  padding: 10px 20px;
-  font-size: .875rem;
-  color: #fff;
-  background-color: #007BFF;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 500;
-}
-
 .timer-inputs {
   display: flex;
-  gap: 16px;
+  align-items: center;
+  gap: .5rem;
 }
 
 .timer-inputs input {
-  width: 110px;
+  width: 50px;
   padding: 10px;
   font-size: .875rem;
   text-align: center;
@@ -59,8 +49,21 @@ body {
   outline: none;
 }
 
+/* Pour Chrome, Safari, Edge, Opera */
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Pour Firefox */
+.no-spinner[type=number] {
+  -moz-appearance: textfield;
+}
+
 .timer-display {
-  font-size: 4rem;
+  font-size: 6rem;
+  font-weight: 500;
 }
 
 header {
@@ -108,7 +111,30 @@ header {
   transition: all 0.3s ease-in-out;
 }
 
+.btn-container {
+  display: flex;
+  gap: 16px;
+}
 
+.btn-container button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #007bff36;
+  color: #fff;
+  border: none;
+  padding: 10px 10px;
+  font-size: .875rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+#btn-start-reset img,
+#btn-pause-resume img {
+  width: 30px;
+  height: 30px;
+}
 
 
 footer {
