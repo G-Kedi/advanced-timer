@@ -8,7 +8,7 @@
   <body>
     <header>
       <div class="logo">
-        <img src="img/easypage.png" alt="le logo de easy page">
+        <img src="assets/img/easypage.png" alt="le logo de easy page" />
       </div>
       <div class="menu-bars">
         <span></span>
@@ -20,21 +20,45 @@
       <div id="timer-controls" class="timer-controls">
         <div class="timer-inputs">
           <input type="number" id="hours" placeholder="0 Heures" min="0" />
-          <input type="number" id="minutes" placeholder="0 Minutes" min="0" max="59" />
-          <input type="number" id="seconds" placeholder="0 Secondes" min="0" max="59" />
+          <input
+            type="number"
+            id="minutes"
+            placeholder="0 Minutes"
+            min="0"
+            max="59"
+          />
+          <input
+            type="number"
+            id="seconds"
+            placeholder="0 Secondes"
+            min="0"
+            max="59"
+          />
         </div>
-        
-        <div>
-          <button id="start-btn">Start</button>
-          <button id="pause-btn">Pause</button>
-          <button id="resume-btn">Resume</button>
-          <button id="reset-btn">Reset</button>
+        <div class="btn-container">
+          <button id="btn-start-reset">
+            <img
+              id="icon-start-reset"
+              src="assets/icons/play.png"
+              alt="Démarrer"
+            />
+          </button>
+          <button id="btn-pause-resume">
+            <img
+              id="icon-pause-resume"
+              src="assets/icons/pause.png"
+              alt="Pause"
+            />
+          </button>
         </div>
       </div>
       <div id="timer-display" class="timer-display">00:00:00</div>
     </section>
     <footer>
-      <p>&copy; 2026 <a href="https://easypagemonde.com">easypagemonde.com</a>. All rights reserved.</p>
+      <p>
+        &copy; 2026 <a href="https://easypagemonde.com">easypagemonde.com</a>.
+        All rights reserved.
+      </p>
     </footer>
     <script type="module" src="js/app.js"></script>
   </body>

@@ -4,10 +4,13 @@ const hoursInput = document.getElementById("hours");
 const minutesInput = document.getElementById("minutes");
 const secondsInput = document.getElementById("seconds");
 
-const startBtn = document.getElementById("start-btn");
-const pauseBtn = document.getElementById("pause-btn");
-const resumeBtn = document.getElementById("resume-btn");
-const resetBtn = document.getElementById("reset-btn");
+// boutons principaux
+const btnStartReset = document.getElementById("btn-start-reset");
+const btnPauseResume = document.getElementById("btn-pause-resume");
+
+// icônes dans les boutons
+const iconStartReset = document.getElementById("icon-start-reset");
+const iconPauseResume = document.getElementById("icon-pause-resume");
 
 const displayEl = document.getElementById("timer-display");
 let displayIntervalId = null;
@@ -31,17 +34,42 @@ function parseDuration(hours, minutes, seconds) {
   return (h * 3600 + m * 60 + s) * 1000;
 }
 
-startBtn.addEventListener("click", () => {
-  const duration = parseDuration(
-    hoursInput.value,
-    minutesInput.value,
-    secondsInput.value,
-  );
+btnStartReset.addEventListener("click", () => {
+  if (!timer.isRunning() && timer.getRemaining() === 0) {
+    // Démarrage
+    const duration = parseDuration(
+      hoursInput.value,
+      minutesInput.value,
+      secondsInput.value,
+    );
+    if (duration <= 0) return;
 
-  if (duration <= 0) return;
+    timer.start(duration);
+    runDisplayLoop();
 
-  timer.start(duration); // moteur JS
-  runDisplayLoop(); // fonction qui met à jour l'affichage (on va la créer)
+    iconStartReset.src = "assets/icons/reset.png";
+    iconStartReset.alt = "Réinitialiser";
+  } else {
+    // Réinitialisation
+    timer.reset();
+    displayEl.textContent = "00:00:00";
+
+    hoursInput.value = "";
+    minutesInput.value = "";
+    secondsInput.value = "";
+
+    // Force bien le changement de l’icône
+    iconStartReset.src = "assets/icons/play.png";
+    iconStartReset.alt = "Démarrer";
+
+    iconPauseResume.src = "assets/icons/pause.png";
+    iconPauseResume.alt = "Pause";
+
+    if (displayIntervalId) {
+      clearInterval(displayIntervalId);
+      displayIntervalId = null;
+    }
+  }
 });
 
 function runDisplayLoop() {
@@ -50,33 +78,31 @@ function runDisplayLoop() {
   displayIntervalId = setInterval(() => {
     const remaining = timer.getRemaining();
     displayEl.textContent = formatTime(remaining);
-
     if (remaining <= 0 && timer.isRunning()) {
       timer.reset();
-      displayEl.textContent = "Timer terminé";
+      displayEl.textContent = "Terminé";
+
+      iconStartReset.src = "assets/icons/play.png";
+      iconStartReset.alt = "Démarrer";
+
+      iconPauseResume.src = "assets/icons/pause.png";
+      iconPauseResume.alt = "Pause";
+
       clearInterval(displayIntervalId);
       displayIntervalId = null;
     }
   }, 200);
 }
 
-pauseBtn.addEventListener("click", () => {
-  timer.pause();
-});
-
-resumeBtn.addEventListener("click", () => {
-  timer.resume();
-  runDisplayLoop();
-});
-
-resetBtn.addEventListener("click", () => {
-  timer.reset();
-  displayEl.textContent = "00:00:00";
-  hoursInput.value = "";
-  minutesInput.value = "";
-  secondsInput.value = "";
-  if (displayIntervalId) {
-    clearInterval(displayIntervalId);
-    displayIntervalId = null;
+btnPauseResume.addEventListener("click", () => {
+  if (timer.isRunning()) {
+    timer.pause();
+    iconPauseResume.src = "assets/icons/resume.png";
+    iconPauseResume.alt = "Reprendre";
+  } else if (timer.getRemaining() > 0) {
+    timer.resume();
+    iconPauseResume.src = "assets/icons/pause.png";
+    iconPauseResume.alt = "Pause";
+    runDisplayLoop();
   }
 });
