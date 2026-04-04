@@ -58,6 +58,7 @@ body {
 
 /* Pour Firefox */
 .no-spinner[type=number] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 
@@ -148,5 +149,4 @@ footer {
 footer a {
   color: #ffffff7e;
   text-decoration: none;
-
 }
